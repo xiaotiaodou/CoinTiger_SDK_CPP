@@ -6,17 +6,17 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <atlstr.h>
-#include <windows.h>//sleepµÄ
-#include < math.h>//ÃİÔËËã
-#include <iostream>//cin coutµÄ
-#include <string>//cin coutµÄ
-#include <io.h>//»ñÈ¡ÎÄ¼ş´óĞ¡_filelengthi64
+#include <windows.h>//sleepçš„
+#include < math.h>//å¹‚è¿ç®—
+#include <iostream>//cin coutçš„
+#include <string>//cin coutçš„
+#include <io.h>//è·å–æ–‡ä»¶å¤§å°_filelengthi64
 
 #include<windows.h>
 #include<wininet.h>
 #include<iostream>
-#include <time.h>//Ê±¼ä
-#include <conio.h>//Ê±¼ä
+#include <time.h>//æ—¶é—´
+#include <conio.h>//æ—¶é—´
 
 #include <metahost.h>
 #include <fstream>
@@ -26,30 +26,30 @@
 #include "my_URL.h"
 #include "time2xtime.h"
 #pragma comment(lib,"wininet.lib")
-using namespace std;//cin coutµÄ
+using namespace std;//cin coutçš„
 typedef map<CString, CString> UDT_MAP_CSTRING_CSTRING;
 typedef map<int, CString> UDT_MAP_INT_CSTRING;
-typedef struct SYMBOLS//ËùÓĞ½»Ò×¶Ô¼°¾«¶È È«²¿´æÎªCS ĞèÒª¼ÆËãÄ³¸öÊ±ÔÙ×ª»» ¿É½µµÍ´ú¼Û
+typedef struct SYMBOLS//æ‰€æœ‰äº¤æ˜“å¯¹åŠç²¾åº¦ å…¨éƒ¨å­˜ä¸ºCS éœ€è¦è®¡ç®—æŸä¸ªæ—¶å†è½¬æ¢ å¯é™ä½ä»£ä»·
 {
-	CString base_currency;//»ù´¡±ÒÖÖ
-	CString quote_currency;//¼Æ¼Û±ÒÖÖ
-	CString price_precision;	//¼Û¸ñ¾«¶È£¨0Îª¸öÎ»£©
-	CString amount_precision;	//ÊıÁ¿¾«¶È£¨0Îª¸öÎ»£©
-	CString symbol_partition;//½»Ò×Çø£ºmainÖ÷Çø£¬innovation´´ĞÂÇø£¬bifurcation·Ö²æÇø
+	CString base_currency;//åŸºç¡€å¸ç§
+	CString quote_currency;//è®¡ä»·å¸ç§
+	CString price_precision;	//ä»·æ ¼ç²¾åº¦ï¼ˆ0ä¸ºä¸ªä½ï¼‰
+	CString amount_precision;	//æ•°é‡ç²¾åº¦ï¼ˆ0ä¸ºä¸ªä½ï¼‰
+	CString symbol_partition;//äº¤æ˜“åŒºï¼šmainä¸»åŒºï¼Œinnovationåˆ›æ–°åŒºï¼Œbifurcationåˆ†å‰åŒº
 };
 typedef map<CString, SYMBOLS> UDT_MAP_CSTRING_SYMBOLS;
-typedef struct MARKET_DEPTH//ÊĞ³¡¹Òµ¥¼Û¸ñ ÊıÁ¿
+typedef struct MARKET_DEPTH//å¸‚åœºæŒ‚å•ä»·æ ¼ æ•°é‡
 {
 	 double price;
 	 double vol;
 };
 typedef map<int, MARKET_DEPTH> UDT_MAP_INT_MARKET_DEPTH;
-typedef struct MARKET_HISTORY//market/history/trade ÀúÊ·³É½»¼ÇÂ¼
+typedef struct MARKET_HISTORY//market/history/trade å†å²æˆäº¤è®°å½•
 {
-	CString amount;//³É½»Á¿
-	CString price;//³É½»¼Û¸ñ
-	CString direction;//Ö÷¶¯·½Ïò
-	CString ts;//Ê±¼ä µ¥Î»ms
+	CString amount;//æˆäº¤é‡
+	CString price;//æˆäº¤ä»·æ ¼
+	CString direction;//ä¸»åŠ¨æ–¹å‘
+	CString ts;//æ—¶é—´ å•ä½ms
 };
 typedef map<int, MARKET_HISTORY> UDT_MAP_INT_MARKET_HISTORY;
 
@@ -60,45 +60,45 @@ class CoinTigerAPI
 public:
 	CoinTigerAPI();
 	~CoinTigerAPI();
-	CString Secret_Key;//API ÃØÃÜÃÜÔ¿(Secret Key) 
-	CString Access_Key;//API ÃÜÔ¿(Access Key)
-	UDT_MAP_CSTRING_CSTRING balanceMap;//±Ò±ÒÕË»§Óà¶î¼°ID£º±Ò±Ò account_id	
-	UDT_MAP_CSTRING_CSTRING currencysMap;//ÊĞ³¡Ö§³Ö±ÒÖÖ
-	UDT_MAP_CSTRING_SYMBOLS symbolsMap;//ËùÓĞ½»Ò×¶Ô¼°¾«¶È
-	UDT_MAP_INT_MARKET_HISTORY historyMap;//ÊĞ³¡×î½ü³É½»Á¿£¬¼Û£¬·½Ïò£¬Ê±¼ä
-	UDT_MAP_CSTRING_MAPCSCS marginMap;//½è´ûÕË»§ ½»Ò×¶Ô margin½á¹¹Ìå
+	CString Secret_Key;//API ç§˜å¯†å¯†é’¥(Secret Key) 
+	CString Access_Key;//API å¯†é’¥(Access Key)
+	UDT_MAP_CSTRING_CSTRING balanceMap;//å¸å¸è´¦æˆ·ä½™é¢åŠIDï¼šå¸å¸ account_id	
+	UDT_MAP_CSTRING_CSTRING currencysMap;//å¸‚åœºæ”¯æŒå¸ç§
+	UDT_MAP_CSTRING_SYMBOLS symbolsMap;//æ‰€æœ‰äº¤æ˜“å¯¹åŠç²¾åº¦
+	UDT_MAP_INT_MARKET_HISTORY historyMap;//å¸‚åœºæœ€è¿‘æˆäº¤é‡ï¼Œä»·ï¼Œæ–¹å‘ï¼Œæ—¶é—´
+	UDT_MAP_CSTRING_MAPCSCS marginMap;//å€Ÿè´·è´¦æˆ· äº¤æ˜“å¯¹ marginç»“æ„ä½“
 	/*******************************************************************************/
-	/* ÂòÂô¹Òµ¥Map Ö»ÓĞ×îĞÂÓĞĞ§ ËùÒÔÖ»´æÒ»¸ö±ÒÖÖ£¬µ¥IPÇé¿öÏÂ²»×ãÒÔ»ñµÃÈ«²¿±ÒÖÖĞĞÇé */
+	/* ä¹°å–æŒ‚å•Map åªæœ‰æœ€æ–°æœ‰æ•ˆ æ‰€ä»¥åªå­˜ä¸€ä¸ªå¸ç§ï¼Œå•IPæƒ…å†µä¸‹ä¸è¶³ä»¥è·å¾—å…¨éƒ¨å¸ç§è¡Œæƒ… */
 	/*******************************************************************************/
-	UDT_MAP_INT_MARKET_DEPTH buyvpMap;//±£´æÂòÅÌ¹Òµ¥
-	UDT_MAP_INT_MARKET_DEPTH sellvpMap;//±£´æÂôÅÌ¹Òµ¥
+	UDT_MAP_INT_MARKET_DEPTH buyvpMap;//ä¿å­˜ä¹°ç›˜æŒ‚å•
+	UDT_MAP_INT_MARKET_DEPTH sellvpMap;//ä¿å­˜å–ç›˜æŒ‚å•
 public:
 	/************************************************************************/
 	/* 					GET								                    */
 	/************************************************************************/
-	CString Get_id();//»ñÈ¡id
-	CString Get_balance_matchresults_order(CString sub, CString order_id);//»ñµÃÕË»§Óà¶î »ò¶©µ¥ÏêÇé »ò¶©µ¥³É½»Ã÷Ï¸
-	BOOL Get_currencys();//²éÑ¯ÏµÍ³ËùÓĞÖ§³ÖµÄ±ÒÖÖ
-	BOOL Get_symbols();//ËùÓĞ½»Ò×¶Ô¼°¾«¶È
-	BOOL Get_market_depth(CString symbol, CString type, int buy_depth, int sell_depth);//ÊĞ³¡¹Òµ¥Á¿ Òª²é¿´µÄÂòÅÌÉî¶ÈbuyvpMap ºÍÂôÅÌÉî¶ÈsellvpMap
-	BOOL Get_market_history(CString symbol, int mun);//ÊĞ³¡×î½ü³É½»Á¿£¬¼Û£¬·½Ïò£¬Ê±¼ä
-	//CString Get_ordermsg(CString order_id);//order-id²éÑ¯¶©µ¥ÏêÇé  ,   order-id+"/matchresults" ²éÑ¯Ä³¸ö¶©µ¥µÄ³É½»Ã÷Ï¸  ·µ»ØÔ­Ê¼Êı¾İ
-	BOOL Get_margin_balance(CString symbol);//½è´ûÕË»§ÏêÇé ²ÎÊı½»Ò×¶Ôxxxusdt
+	CString Get_id();//è·å–id
+	CString Get_balance_matchresults_order(CString sub, CString order_id);//è·å¾—è´¦æˆ·ä½™é¢ æˆ–è®¢å•è¯¦æƒ… æˆ–è®¢å•æˆäº¤æ˜ç»†
+	BOOL Get_currencys();//æŸ¥è¯¢ç³»ç»Ÿæ‰€æœ‰æ”¯æŒçš„å¸ç§
+	BOOL Get_symbols();//æ‰€æœ‰äº¤æ˜“å¯¹åŠç²¾åº¦
+	BOOL Get_market_depth(CString symbol, CString type, int buy_depth, int sell_depth);//å¸‚åœºæŒ‚å•é‡ è¦æŸ¥çœ‹çš„ä¹°ç›˜æ·±åº¦buyvpMap å’Œå–ç›˜æ·±åº¦sellvpMap
+	BOOL Get_market_history(CString symbol, int mun);//å¸‚åœºæœ€è¿‘æˆäº¤é‡ï¼Œä»·ï¼Œæ–¹å‘ï¼Œæ—¶é—´
+	//CString Get_ordermsg(CString order_id);//order-idæŸ¥è¯¢è®¢å•è¯¦æƒ…  ,   order-id+"/matchresults" æŸ¥è¯¢æŸä¸ªè®¢å•çš„æˆäº¤æ˜ç»†  è¿”å›åŸå§‹æ•°æ®
+	BOOL Get_margin_balance(CString symbol);//å€Ÿè´·è´¦æˆ·è¯¦æƒ… å‚æ•°äº¤æ˜“å¯¹xxxusdt
 
-	CString Get_Â·¾¶ÎŞ²ÎÊıÍ¨ÓÃ(CString phat, CString *instr, int mun);
+	CString Get_è·¯å¾„æ— å‚æ•°é€šç”¨(CString phat, CString *instr, int mun);
 	/************************************************************************/
 	/* 					POST							                    */
 	/************************************************************************/
-	CString Post_place(CString symbol, CString price, CString mun, CString source, CString type);//¹Òµ¥£¨ ±ÒÖÖ ¼Û¸ñ ÊıÁ¿ ½è´û£¿ ÀàĞÍ£©//·µ»Ø¶©µ¥ºÅ
-	CString Post_transfer_inout_apply(CString phat, CString symbol, CString currency, CString start);//ÏÖ»õÓë½è´ûÕËºÅµÄ×ªÈë×ª³ö
-	BOOL Post_submitcancel(CString order_id);//³·µ¥
-	BOOL Post_batchcancel(CString *order_id, int mun);//ÅúÁ¿³·µ¥£¬²ÎÊı1¶©µ¥ºÅÊı×é ²ÎÊı2Êı×éÔªËØ¸öÊı
-	BOOL Post_margin_repay(CString order_id, CString amount);//¹é»¹½è´û
-	CString Post_×ÔĞ´Â·¾¶Í¨ÓÃ(CString phat, CString *instr, int mun);
+	CString Post_place(CString symbol, CString price, CString mun, CString source, CString type);//æŒ‚å•ï¼ˆ å¸ç§ ä»·æ ¼ æ•°é‡ å€Ÿè´·ï¼Ÿ ç±»å‹ï¼‰//è¿”å›è®¢å•å·
+	CString Post_transfer_inout_apply(CString phat, CString symbol, CString currency, CString start);//ç°è´§ä¸å€Ÿè´·è´¦å·çš„è½¬å…¥è½¬å‡º
+	BOOL Post_submitcancel(CString order_id);//æ’¤å•
+	BOOL Post_batchcancel(CString *order_id, int mun);//æ‰¹é‡æ’¤å•ï¼Œå‚æ•°1è®¢å•å·æ•°ç»„ å‚æ•°2æ•°ç»„å…ƒç´ ä¸ªæ•°
+	BOOL Post_margin_repay(CString order_id, CString amount);//å½’è¿˜å€Ÿè´·
+	CString Post_è‡ªå†™è·¯å¾„é€šç”¨(CString phat, CString *instr, int mun);
 private:
-	CString Get_Sendmsg(CString* intmp, int mun, CString Sub, CString GetOfPost);//ÅÅĞò ¼ÆËãÃØÔ¿ ·µ»ØÆ´½ÓºóµÄµØÖ·
-	CString Get_Times();//»ñÈ¡»ğ±Ò¸ñÊ½µÄ±¾µØUTCÊ±¼ä
-	CString find_str(CString inCStr, const char* exptxt);//ÕıÔò±í´ïÊ½ËÑË÷²¢·µ»ØµÚÒ»¸ö
+	CString Get_Sendmsg(CString* intmp, int mun, CString Sub, CString GetOfPost);//æ’åº è®¡ç®—ç§˜é’¥ è¿”å›æ‹¼æ¥åçš„åœ°å€
+	CString Get_Times();//è·å–å¸è™æ ¼å¼çš„æœ¬åœ°UTCæ—¶é—´
+	CString find_str(CString inCStr, const char* exptxt);//æ­£åˆ™è¡¨è¾¾å¼æœç´¢å¹¶è¿”å›ç¬¬ä¸€ä¸ª
 	void writeLog(CString msg, CString fxname);
 	
 };
